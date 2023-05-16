@@ -9,6 +9,8 @@ const passport = require('passport')
 const methodOverride = require('method-override')
 
 const indexRouter = require('./routes/index')
+const budgetRouter = require('./routes/budgets')
+const notesRouter = require('./routes/notes')
 
 const app = express()
 
@@ -23,6 +25,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(methodOverride('_method'))
+
 
 app.use(
 	session({
@@ -44,6 +47,8 @@ app.use(function (req, res, next) {
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)
+app.use('/budgets', budgetRouter)
+app.use('/notes', notesRouter)
 
 app.use(function (req, res, next) {
 	next(createError(404))

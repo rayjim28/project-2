@@ -1,4 +1,4 @@
-<%- include('../partials/header.ejs') %>
+<!-- <%- include('../partials/header.ejs') %>
 
 <h3>Pokemon Detail Page</h3>
 <div class="pokemon-container">
@@ -22,4 +22,22 @@
     </div>
 </div>
 
-<%- include('../partials/footer.ejs') %>
+<%- include('../partials/footer.ejs') %> -->
+
+<%- include('../partials/header') %>
+
+<h3>Note Detail Page</h3>
+<div class="note-container">
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">
+                <%= note.title %>
+            </h5>
+            <p class="card-text">
+                <%= note.content %>
+            </p>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

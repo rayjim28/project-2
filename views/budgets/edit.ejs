@@ -1,0 +1,8 @@
+<%- include('../partials/header') %>
+
+<form action="/budgets/<%= budget.id %>?_method=PUT" method="POST" autocomplete="off">
+    <input type="text" name="name" value="<%= budget.name %>">
+    <button type="submit">Update Budget</button>
+</form>
+
+<%- include('../partials/footer') %>
