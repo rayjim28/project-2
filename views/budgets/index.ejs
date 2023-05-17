@@ -1,44 +1,58 @@
 <%- include('../partials/header') %>
 
 <div class="container mt-4">
-  <h2>Budgets</h2>
+  <h2>My Budget</h2>
 
-  <a href="/budgets/new" class="btn btn-primary">Add a Budget</a>
+  <form action="/budgets" method="POST" class="mb-3">
+    <div class="input-group">
+      <input type="number" class="form-control" name="amount" placeholder="Enter your income">
+      <button type="submit" class="btn btn-primary">Income</button>
+    </div>
+  </form>
+
+
+  <a href="/budgets/new" class="btn btn-primary">Add a Expense</a>
 
   <ul class="list-group mt-3">
     <% let totalAmount = 0 %>
     <% budgets.forEach(function(budget) { %>
     <li class="list-group-item d-flex justify-content-between align-items-center">
       <div>
-        <a href="/budgets/<%= budget.id %>" class="text-decoration-none">
+        <a href="/expenses/<%= budget.id %>" class="text-decoration-none">
           <%= budget.name %>
         </a>
         <div class="text-muted">
-          <%= budget.category %>
+            <%= budget.category %>
         </div>
+        <% if (budget && budget.date) { %>
         <div class="text-muted">
           Date: <%= budget.date.toDateString() %>
         </div>
-        <% if (budget.notes && budget.notes.length > 0) { %>
+        <% } else { %>
+            <div class="text-muted">
+                Date: N/A
+              </div>
+            <% } %>
+        <% if (budget.expenses && budget.expenses.length > 0) { %>
         <div>
-          Notes:
+          Expenses:
           <ul>
-            <% budget.notes.forEach(function(note) { %>
-            <li><%= note %></li>
+            <% budget.expenses.forEach(function(expense) { %>
+            <li><%= expense %></li>
             <% }); %>
           </ul>
         </div>
         <% } %>
       </div>
       <div class="d-flex">
-        <span class="badge bg-secondary">$<%= budget.amount.toFixed(2) %></span>
+        <span class="badge bg-secondary">$<%= budget.amount !== undefined ? budget.amount.toFixed(2) : '0.00' %></span>
         <a href="/budgets/<%= budget.id %>/edit" class="btn btn-primary btn-sm ms-2">Edit</a>
         <form action="/budgets/<%= budget.id %>?_method=DELETE" method="POST" class="ms-2">
           <button type="submit" class="btn btn-danger btn-sm">Delete</button>
         </form>
       </div>
     </li>
-    <% totalAmount += budget.amount %>
+    <% totalAmount += budget.amount !== undefined ? budget.amount : 0 %>
     <% }); %>
   </ul>
   <div class="total-amount text-end mt-3">

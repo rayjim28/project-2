@@ -1,33 +1,34 @@
-const mongoose = require('mongoose');
-const notesSchema = require('./note');
+const mongoose = require("mongoose");
+const expenseSchema = require("./expense");
 const Schema = mongoose.Schema;
 
 const budgetSchema = new Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
     required: true,
   },
   name: {
     type: String,
     required: true,
   },
-  amount: {
-    type: Number,
-    required: true,
-  },
-  category: {
-    type: String,
-    enum: ['housing'],
-    required: true,
-  },
   date: {
     type: Date,
     default: Date.now,
   },
-  notes: [notesSchema]
+  note: {
+    type: String,
+  },
+  expenses: [expenseSchema],
+  income: 
+    {
+      amount: {
+        type: Number,
+        required: true,
+        default: 0
+      },
+    },
+  
 });
 
-
-
-module.exports = mongoose.model('Budget', budgetSchema);
+module.exports = mongoose.model("Budget", budgetSchema);

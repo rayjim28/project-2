@@ -16,4 +16,6 @@ router.put('/:id', budgetCtrl.updateBudget);
 
 router.delete('/:id', budgetCtrl.deleteBudget);
 
+router.post('/budgets', budgetCtrl.calculateIncomeAfterExpenses);
+
 module.exports = router;

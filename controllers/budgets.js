@@ -1,8 +1,12 @@
 const Budget = require('../models/budget');
 
 function index(req, res, next) {
+  if (!req.user) {
+    return res.redirect('/');
+  }
   Budget.find({ user_id: req.user._id })
     .then((budgets) => {
+      console.log('budgets:', budgets);
       res.render('budgets/index', {
         budgets,
         title: 'My Budgets',
@@ -16,7 +20,10 @@ function newBudget(req, res) {
 }
 
 function create(req, res, next) {
-  req.body.user_id = req.user._id
+  req.body.user_id = req.user._id;
+  // const { name, income, note } = req.body;
+  // { name, income, note }
+  console.log('req.body in budget create', req.body)
   Budget.create(req.body)
     .then(() => res.redirect('/budgets'))
     .catch(next);
@@ -25,6 +32,7 @@ function create(req, res, next) {
 function show(req, res, next) {
   Budget.findById(req.params.id)
     .then((budget) => {
+      console.log('budget:', budget);
       res.render('budgets/show', {
         budget,
         title: 'Budget Details',
@@ -33,22 +41,11 @@ function show(req, res, next) {
     .catch(next);
 }
 
-// function updateBudget(req, res, next) {
-//   Budget.findById(req.params.id)
-//     .then((budget) => {
-//       if (!budget.user_id.equals(req.user._id)) throw new Error('Unauthorized');
-//       Object.assign(budget, req.body);
-//       return budget.save();
-//     })
-//     .then(() => res.redirect(`/budgets/${req.params.id}`))
-//     .catch(next);
-// }
-
 function updateBudget(req, res, next) {
   Budget.findById(req.params.id)
     .then((budget) => {
-      console.log('budget', budget)
-      console.log('req.user', req.user)
+      console.log('budget:', budget);
+      console.log('req.user:', req.user);
       if (!budget.user_id.equals(req.user._id)) {
         throw new Error('Unauthorized');
       }
@@ -61,22 +58,43 @@ function updateBudget(req, res, next) {
 function deleteBudget(req, res, next) {
   Budget.findById(req.params.id)
     .then((budget) => {
-      if (!budget.user_id.equals(req.user._id)) throw new Error('Unauthorized');
+      console.log('budget:', budget);
+      if (!budget.user_id.equals(req.user._id)) {
+        throw new Error('Unauthorized');
+      }
       return budget.deleteOne();
     })
     .then(() => res.redirect('/budgets'))
     .catch(next);
 }
-// it takes in an id of a budget, finds it by id, then we render it to the edit form 
+
 function editBudget(req, res, next) {
   Budget.findById(req.params.id)
     .then((budget) => {
+      console.log('budget:', budget);
       if (!budget) {
         throw new Error('Budget not found');
       }
       res.render('budgets/edit', {
         budget,
         title: 'Edit Budget',
+      });
+    })
+    .catch(next);
+}
+
+function calculateIncomeAfterExpenses(req, res, next) {
+  const { income } = req.body;
+  Budget.find({ user_id: req.user._id })
+    .then((budgets) => {
+      console.log('budgets:', budgets);
+      const totalAmount = budgets.reduce((sum, budget) => sum + budget.amount, 0);
+      console.log('totalAmount:', totalAmount);
+      const incomeAfterExpenses = income - totalAmount;
+      console.log('incomeAfterExpenses:', incomeAfterExpenses);
+      res.render('/budgets/index', {
+        title: 'My Budgets',
+        income: incomeAfterExpenses,
       });
     })
     .catch(next);
@@ -89,5 +107,6 @@ module.exports = {
   show,
   updateBudget,
   deleteBudget,
-  editBudget
+  editBudget,
+  calculateIncomeAfterExpenses,
 };

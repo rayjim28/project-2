@@ -1,0 +1,14 @@
+<%- include('../partials/header') %>
+
+<h3>Expense Detail Page</h3>
+<div class="expense-container">
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title"><%= expense.name %></h5>
+      <p class="card-text">Amount: <%= expense.amount.toFixed(2) %></p>
+      <p class="card-text">Category: <%= expense.category %></p>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
