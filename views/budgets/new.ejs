@@ -10,13 +10,22 @@
     </div>
     <div class="mb-3">
       <label for="budgetAmount" class="form-label">Amount</label>
-      <input type="number" name="amount" class="form-control" id="budgetAmount" required>
+      <div class="input-group">
+        <span class="input-group-text">$</span>
+        <input type="number" name="amount" class="form-control" id="budgetAmount" required>
+      </div>
     </div>
     <div class="mb-3">
       <label for="budgetCategory" class="form-label">Category</label>
       <select name="category" class="form-control" id="budgetCategory" required>
         <option value="housing">Housing</option>
+        <option value="groceries">Groceries</option>
+        <!-- This is where I can add more categories -->
       </select>
+    </div>
+    <div class="mb-3">
+      <label for="budgetDueDate" class="form-label">Due Date</label>
+      <input type="date" name="dueDate" class="form-control" id="budgetDueDate">
     </div>
     <button type="submit" class="btn btn-primary">Save Budget</button>
   </form>

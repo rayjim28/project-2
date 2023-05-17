@@ -1,7 +1,6 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const budgetCtrl = require("../controllers/budgets");
-const budget = require('../models/budget');
+const budgetCtrl = require('../controllers/budgets');
 
 router.get('/', budgetCtrl.index);
 

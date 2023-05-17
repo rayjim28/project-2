@@ -1,11 +1,11 @@
-const mongoose = require("mongoose");
-const notesSchema = require("./note");
+const mongoose = require('mongoose');
+const notesSchema = require('./note');
 const Schema = mongoose.Schema;
 
 const budgetSchema = new Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: 'User',
     required: true,
   },
   name: {
@@ -18,7 +18,7 @@ const budgetSchema = new Schema({
   },
   category: {
     type: String,
-    enum: ["housing"],
+    enum: ['housing'],
     required: true,
   },
   date: {
@@ -28,6 +28,6 @@ const budgetSchema = new Schema({
   notes: [notesSchema]
 });
 
-const Budget = mongoose.model("Budget", budgetSchema);
 
-module.exports = Budget;
+
+module.exports = mongoose.model('Budget', budgetSchema);
