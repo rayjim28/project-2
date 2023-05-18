@@ -10,7 +10,7 @@ const methodOverride = require('method-override')
 
 const indexRouter = require('./routes/index')
 const budgetRouter = require('./routes/budgets')
-const notesRouter = require('./routes/notes')
+const expensesRouter = require('./routes/expenses')
 
 const app = express()
 
@@ -39,6 +39,9 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use(function (req, res, next) {
+	req.user = {
+		_id: '6464299db424f33c56a9ce7c'
+	}
 	res.locals.user = req.user
 
 	next()
@@ -48,7 +51,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)
 app.use('/budgets', budgetRouter)
-app.use('/notes', notesRouter)
+app.use('/', expensesRouter)
 
 app.use(function (req, res, next) {
 	next(createError(404))

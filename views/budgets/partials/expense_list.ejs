@@ -1,0 +1,40 @@
+<ul class="list-group mt-3">
+  <% let totalExpenseAmount= 0 %>
+  <% let totalIncomeAmount= budget.incomes.reduce((acc, income) => acc + income.amount, 0) %>
+
+    <% budget.expenses.forEach(function(expense) { %>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <a href="/budgets/<%= budget.id %>/expenses/<%= expense._id %>" class="text-decoration-none">
+            <%= expense.name %>
+          </a>
+          <div class="text-muted">
+            <%= expense.category %>
+          </div>
+
+          <% if (expense.date) { %>
+            <div class="text-muted">
+              Date: <%= expense.date.toDateString() %>
+            </div>
+            <% } else { %>
+              <div class="text-muted">
+                Date: N/A
+              </div>
+              <% } %>
+        </div>
+        <div class="d-flex">
+          <span class="badge bg-secondary">$<%= expense.amount ? expense.amount.toFixed(2) : '0.00' %></span>
+          <form action="/budgets/<%= budget.id %>/expenses/<%= expense._id %>?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-sm btn-danger">X</button>
+          </form>
+          <a href="/budgets/<%= budget.id %>/expenses/<%= expense._id %>/edit" class="">Edit</a>
+        </div>
+      </li>
+      <% totalExpenseAmount += expense.amount ? expense.amount : 0 %>
+    <% }) %>
+
+  <div class="total-amount text-end mt-3">
+    Total Expense Amount: $<%= totalExpenseAmount.toFixed(2) %> <br>
+    Left Over Amount: $<%= totalIncomeAmount - totalExpenseAmount.toFixed(2) %>
+  </div>
+</ul>

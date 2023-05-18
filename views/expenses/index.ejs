@@ -1,0 +1,15 @@
+<%- include('../partials/header') %>
+
+<h2>Expenses</h2>
+<div class="expenses-container">
+  <% expenses.forEach(function(note) { %>
+  <div class="card" style="width: 18rem">
+    <div class="card-body">
+      <h5 class="card-title"><%= expense.name %></h5>
+      <a href="budgets/<%= budget.id %>/expenses/<%= expense.id %>" class="card-link">Detail Page</a>
+    </div>
+  </div>
+  <% }); %>
+</div>
+
+<%- include('../partials/footer') %>

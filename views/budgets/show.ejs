@@ -1,29 +1,16 @@
 <%- include('../partials/header.ejs') %>
 
 <div class="container mt-4">
-  <h3><%= budget.name %></h3>
+  <% let totalIncomeAmount = budget.incomes.reduce((acc, income) => acc + income.amount, 0) %>
 
-  <ul class="list-group mt-3">
-    <% if (budget.note) { %>
-      <% budget.note.forEach(function(note) { %>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <form action="/budgets/<%= budget.id %>/budgets/<%= note.id %>?_method=DELETE" method="POST">
-            <button type="submit" class="btn btn-sm btn-danger">X</button>
-          </form>
-          <a href="/budgets/<%= note.id %>"><%= note.name %></a>
-        </li>
-      <% }); %>
-    <% } %>
-  </ul>
+  <h3><%= budget.name %> Budget</h3>
+  <h3>Total Income $<%= totalIncomeAmount %> </h3>
+  <a href="/budgets/<%= budget.id %>/expenses/new" class="btn btn-primary">Add Expense</a>
 
-  <form action="/budgets/<%= budget.id %>/notes" method="POST" class="mt-3">
-    <div class="input-group">
-      <input type="text" name="content" class="form-control" placeholder="Note" required>
-      <button type="submit" class="btn btn-primary">Add Note</button>
-    </div>
-  </form>
+  <% if (budget.expenses.length !== 0) { %>
+    <%- include('./partials/expense_list.ejs') %>    
+  <% } %>
 
-  <a href="/budgets/<%= budget.id %>/edit" class="btn btn-secondary mt-3">Edit</a>
 </div>
 
 <%- include('../partials/footer.ejs') %>
