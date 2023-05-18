@@ -1,13 +1,17 @@
 const express = require('express');
-const router = express.Router();
 const expensesCtrl = require('../controllers/expenses');
 
-router.get('/:id', expensesCtrl.show);
+const router = express.Router();
 
-router.post('/', expensesCtrl.addExpense);
+router.get('/budgets/:id/expenses/new', expensesCtrl.newExpense);
 
-router.delete('/:id', expensesCtrl.deleteExpense);
+router.get('/budgets/:id/expenses/:expense_id', expensesCtrl.show);
+router.get('/budgets/:id/expenses/:expense_id/edit', expensesCtrl.edit);
 
-router.put('/:id', expensesCtrl.updateExpense);
+router.post('/budgets/:id/expenses', expensesCtrl.addExpense);
+
+router.put('/budgets/:id/expenses/:expense_id', expensesCtrl.updateExpense);
+
+router.delete('/budgets/:id/expenses/:expense_id', expensesCtrl.deleteExpense);
 
 module.exports = router;

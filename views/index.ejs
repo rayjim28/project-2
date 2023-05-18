@@ -2,4 +2,22 @@
 
 <h1 class="home-title">Budget Boss</h1>
 
+<br>
+
+<% if (user) { %>
+    <h3 class="home-title">Create Budget</h3>
+    <form action="/budgets" method="POST" class="mb-3">
+        <div class="input-group">
+            <input type="text" class="form-control" name="name" placeholder="Enter your budget name">
+            <input type="number" class="form-control" name="amount" placeholder="Enter your income">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    <% } else { %>
+        <h1 class="home-title">Please Login</h1>
+    <% } %>
+
+
+
+
 <%- include('./partials/footer') %>

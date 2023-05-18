@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const expenseSchema = new Schema ({
+// This is where I can add more categories
+const categories = ['Housing', 'Food', 'Medical'];
+
+const expenseSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -13,6 +16,7 @@ const expenseSchema = new Schema ({
   category: {
     type: String,
     required: true,
+    enum: categories,
   },
   date: {
     type: Date,
@@ -20,4 +24,7 @@ const expenseSchema = new Schema ({
   },
 });
 
-module.exports =  expenseSchema;
+module.exports = {
+  categories,
+  Expense: mongoose.model('Expense', expenseSchema)
+};
