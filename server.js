@@ -39,11 +39,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use(function (req, res, next) {
-	req.user = {
-		_id: '6464299db424f33c56a9ce7c'
-	}
 	res.locals.user = req.user
-
 	next()
 })
 
