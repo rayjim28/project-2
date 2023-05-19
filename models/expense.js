@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // This is where I can add more categories
-const categories = ['Housing', 'Food', 'Medical'];
+const categories = ['Housing', 'Medical', 'Groceries', 'Car'];
 
 const expenseSchema = new Schema({
   name: {

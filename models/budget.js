@@ -15,9 +15,6 @@ const budgetSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  note: {
-    type: String,
-  },
   expenses: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Expense",
